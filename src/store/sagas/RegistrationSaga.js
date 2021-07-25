@@ -37,7 +37,7 @@ function* registration(action) {
       type: types.LOADER_STOP,
     });
   } catch (error) {
-    //console.log("register saga error: ",error);
+    console.log('register saga error: ', error);
     yield put({
       type: types.TOAST_SHOW,
       payload: {

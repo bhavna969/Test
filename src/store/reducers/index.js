@@ -5,6 +5,7 @@ import loaderReducer from './loaderReducer';
 import LogoutReducer from './LogoutReducer';
 import toastReducer from './toastReducer';
 import ListReducer from './ListReducer';
+import LocationReducer from './LocationReducer';
 
 export default combineReducers({
   LoginReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   LogoutReducer,
   toastReducer,
   ListReducer,
+  LocationReducer,
 });

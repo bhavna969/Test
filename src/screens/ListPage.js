@@ -1,48 +1,84 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image, FlatList, Button} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  Button,
+  ImageBackground,
+} from 'react-native';
 
 import {connect} from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {showList} from '../store/actions/ListAction';
 
 class ListPage extends Component {
-  state = {
-    loading: false,
+  fetchData = (isPaginated = true) => {
+    const {listData, showList} = this.props;
+
+    if (!isPaginated) {
+      showList({data: [], pageNo: 1});
+      return;
+    }
+    // console.log('listData', listData);
+
+    const data = (listData && listData.data) || [];
+    const currentPage = (listData && listData.page) || 0;
+    const pageNo = currentPage + 1;
+
+    if (pageNo <= listData.total_pages) showList({data, pageNo});
   };
-  // componentDidMount() {
-  //     AsyncStorage.getItem('ListData')
-  //     .then((data)=> {
-  //         this.setState({loading: false});
-  //         if(data) {
-  //             this.props.setUserData(JSON.parse(data));
-  //         }
-  //     })
-  //     .catch(()=>{
-  //         this.setState({loading: false})
-  //     });
-  // }
   render() {
+    const {listData} = this.props;
+
     return (
       <View style={[styles.main]}>
-        <Image
+        <ImageBackground
           source={require('../assets/images/background.png')}
-          style={styles.image}
-        />
-        <View style={[styles.container]}>
-          <Button
-            title="Show Users List"
-            onPress={() => this.props.showList()}
+          style={styles.image}>
+          <View style={[styles.container]}>
+            <Button
+              title="Show Users List"
+              onPress={() => this.fetchData(false)}
+            />
+          </View>
+          <FlatList
+            data={(listData && listData.data) || []}
+            renderItem={renderItem}
+            onEndReachedThreshold={0.5}
+            onEndReached={({distanceFromEnd}) => {
+              if (distanceFromEnd >= 0) this.fetchData();
+            }}
+            refreshing={false}
+            onRefresh={() => this.fetchData(false)}
           />
-          {/* <FlatList>
-                        <Text style = {[styles.text]}>Users</Text>
-                    </FlatList> */}
-        </View>
+        </ImageBackground>
       </View>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    listData: state.ListReducer.listData,
+  };
+};
+export default connect(mapStateToProps, {showList})(ListPage);
 
-export default connect(null, {showList})(ListPage);
+const renderItem = item => {
+  const {avatar, email, first_name, id, last_name} = item.item;
+  return (
+    <View style={[styles.item]}>
+      <Image style={[styles.avatar]} source={{uri: avatar}} />
+      <View style={[styles.itemBox]}>
+        <Text>Id: {id}</Text>
+        <Text>
+          Name : {first_name} {last_name}
+        </Text>
+        <Text>Email id : {email}</Text>
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   main: {
@@ -50,28 +86,32 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  container: {
-    backfaceVisibility: 'visible',
-    position: 'absolute',
-    justifyContent: 'center',
-    // alignItems: 'center',
-    margin: 10,
-    // borderWidth: 1,
-    width: '95%',
-    padding: 30,
-  },
-  text: {
-    fontSize: 18,
-    //borderWidth: 2,
-    // borderRadius: 50,
-    width: 200,
-    height: 50,
-    textAlign: 'center',
-    alignSelf: 'center',
-    marginVertical: 20,
-  },
   image: {
     flex: 1,
     width: '100%',
+    justifyContent: 'center',
+  },
+  container: {
+    justifyContent: 'center',
+    // alignItems: 'center',
+    margin: 10,
+    borderWidth: 1,
+    width: '95%',
+    padding: 30,
+  },
+  item: {
+    margin: 10,
+    borderWidth: 1,
+    width: '95%',
+    height: 100,
+    padding: 30,
+    flexDirection: 'row',
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+  },
+  itemBox: {
+    marginLeft: 20,
   },
 });

@@ -1,6 +1,6 @@
 import * as types from '../actionTypes';
 
 export const showList = payload => ({
-  type: types.LIST_SHOW,
+  type: types.GET_LIST_DATA_START,
   payload,
 });

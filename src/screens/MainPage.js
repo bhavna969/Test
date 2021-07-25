@@ -1,13 +1,21 @@
 import React, {Component} from 'react';
-import {View, Text, Button, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  Image,
+  ImageBackground,
+} from 'react-native';
 
 import STYLES from '../utils/styles';
 import Registration from './RegistrationPage';
-import LogInPage from './LogInPage';
+import LogIn from './LogInPage';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {connect} from 'react-redux';
+import Animations from './Slider';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +36,7 @@ class MainPage extends Component {
           }}>
           <Stack.Screen name="MyApp" component={HomeScreen} />
           <Stack.Screen name="RegistrationPage" component={Registration} />
-          <Stack.Screen name="LogInPage" component={LogInPage} />
+          <Stack.Screen name="LogIn" component={LogIn} />
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -38,15 +46,10 @@ class MainPage extends Component {
 const HomeScreen = ({navigation}) => {
   return (
     <View style={[STYLES.main, styles.main]}>
-      <Image
+      <ImageBackground
         source={require('../assets/images/wallpaper.png')}
-        style={styles.image}
-      />
-      <View style={[styles.container]}>
-        <Image
-          source={require('../assets/images/welcome.png')}
-          style={styles.welcomePic}
-        />
+        style={styles.image}>
+        <Animations />
         <View style={[styles.button]}>
           <Button
             title="Sign UP"
@@ -56,11 +59,11 @@ const HomeScreen = ({navigation}) => {
           <View />
           <Button
             title="LOGIN"
-            onPress={() => navigation.navigate('LogInPage')}
+            onPress={() => navigation.navigate('LogIn')}
             color="teal"
           />
         </View>
-      </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -80,28 +83,18 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    borderWidth: 1,
     width: '100%',
-  },
-  welcomePic: {
-    height: 180,
-    width: '80%',
-    borderWidth: 10,
-    borderRadius: 200,
-  },
-  container: {
-    padding: 30,
-    width: '100%',
-    height: '100%',
-    borderWidth: 2,
+    // height: '100%',
+    // borderWidth: 2,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backfaceVisibility: 'visible',
-    position: 'absolute',
   },
   button: {
     padding: 20,
     width: 300,
     height: 150,
+    // borderWidth: 2,
     justifyContent: 'space-evenly',
   },
 });

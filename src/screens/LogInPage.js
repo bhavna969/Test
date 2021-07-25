@@ -1,9 +1,17 @@
 import React, {Component} from 'react';
-import {View, Text, Button, StyleSheet, TextInput, Image} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TextInput,
+  Image,
+  ImageBackground,
+} from 'react-native';
 import STYLES from '../utils/styles';
 import {initLogin} from '../store/actions/LogInAction';
 import {connect} from 'react-redux';
-import Home from './HomeNavigation';
+import Home from '../components/Navigation/HomeNavigation';
 
 class LogIn extends Component {
   state = {
@@ -22,55 +30,57 @@ class LogIn extends Component {
 
     return (
       <View style={[STYLES.main, styles.container]}>
-        <Image
+        <ImageBackground
           source={require('../assets/images/bgImage1.png')}
-          style={styles.image}
-        />
-        <View style={[styles.main]}>
-          <Text style={[styles.text]}></Text>
-          {RegisUser ? (
-            <Image
-              source={require('../assets/images/user.png')}
-              style={styles.profilePic}
-            />
-          ) : (
-            <View>
-              <Text style={[styles.text]}>Not Registered</Text>
+          style={styles.image}>
+          <View style={[styles.main]}>
+            <Text style={[styles.text]}></Text>
+            {RegisUser ? (
               <Image
-                source={require('../assets/images/nullImage.png')}
+                source={require('../assets/images/user.png')}
                 style={styles.profilePic}
               />
-            </View>
-          )}
-          <TextInput
-            value={email}
-            placeholder="enter Email"
-            style={styles.input}
-            onChangeText={value => this.setState({email: value})}
-          />
-          <TextInput
-            value={password}
-            placeholder="enter password"
-            secureTextEntry
-            style={styles.input}
-            onChangeText={value => this.setState({password: value})}
-          />
-          <View style={[styles.button]}>
-            {RegisUser ? (
-              <Button
-                title="LogIn"
-                onPress={() => this.props.initLogin(this.state)}
-                color="darkslategrey"
-              />
             ) : (
-              <Button
-                title="LogIn"
-                onPress={() => alert('user not registered')}
-                color="darkslategrey"
-              />
+              <View>
+                <Text style={[styles.text]}>Not Registered</Text>
+                <Image
+                  source={require('../assets/images/nullImage.png')}
+                  style={styles.profilePic}
+                />
+              </View>
             )}
+            <TextInput
+              value={email}
+              placeholder="enter Email"
+              style={styles.input}
+              onChangeText={value => this.setState({email: value})}
+            />
+            <TextInput
+              value={password}
+              placeholder="enter password"
+              secureTextEntry
+              style={styles.input}
+              onChangeText={value => this.setState({password: value})}
+            />
+            <View style={[styles.button]}>
+              {RegisUser ? (
+                <Button
+                  title="LogIn"
+                  onPress={() => this.props.initLogin(this.state)}
+                  color="darkslategrey"
+                />
+              ) : (
+                <Button
+                  title="LogIn"
+                  onPress={() =>
+                    this.props.navigation.navigate('RegistrationPage')
+                  }
+                  color="darkslategrey"
+                />
+              )}
+            </View>
           </View>
-        </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -89,12 +99,17 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
+  image: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+  },
   main: {
-    backfaceVisibility: 'visible',
+    // backfaceVisibility: 'visible',
     justifyContent: 'center',
     padding: 40,
     margin: 10,
-    position: 'absolute',
+    // position: 'absolute',
   },
   input: {
     backgroundColor: 'lightgrey',
@@ -115,10 +130,6 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     borderWidth: 2,
     borderRadius: 10,
-  },
-  image: {
-    flex: 1,
-    width: '100%',
   },
   profilePic: {
     height: 150,

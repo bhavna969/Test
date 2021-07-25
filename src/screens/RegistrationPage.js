@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {View, Text, Button, StyleSheet, TextInput, Image} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  TextInput,
+  Image,
+  ImageBackground,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {
   initRegistration,
@@ -7,7 +15,7 @@ import {
 } from '../store/actions/RegistrationAction';
 
 import STYLES from '../utils/styles';
-import Home from './HomeNavigation';
+import Home from '../components/Navigation/HomeNavigation';
 
 class Registration extends Component {
   state = {
@@ -25,65 +33,71 @@ class Registration extends Component {
     if (user) {
       return (
         <View style={[STYLES.main, styles.container]}>
-          <Image
+          <ImageBackground
             source={require('../assets/images/bg.png')}
-            style={styles.image}
-          />
-          <View style={[styles.main, {padding: 60, alignSelf: 'baseline'}]}>
-            <Text style={[styles.text]}>User Registered!!</Text>
-            <Button
-              title="Unregister"
-              onPress={() => this.props.unregister(this.state)}
-              color="darkslategrey"
-            />
-          </View>
+            style={styles.image}>
+            <View style={[styles.main, {padding: 60, alignSelf: 'baseline'}]}>
+              <Text style={[styles.text]}>User Registered!!</Text>
+              <Button
+                title="Unregister"
+                onPress={() => this.props.unregister(this.state)}
+                color="darkslategrey"
+              />
+              <View style={{marginVertical: 15}} />
+              <Button
+                title="Go to login page"
+                onPress={() => this.props.navigation.navigate('LogIn')}
+                color="darkslategrey"
+              />
+            </View>
+          </ImageBackground>
         </View>
       );
     }
 
     return (
       <View style={[STYLES.main, styles.container]}>
-        <Image
+        <ImageBackground
           source={require('../assets/images/bgImage.png')}
-          style={styles.image}
-        />
-        <View style={[styles.main]}>
-          <Text style={[styles.text]}>
-            Fill the following details to register
-          </Text>
-          <TextInput
-            value={firstName}
-            placeholder="Enter First Name"
-            style={styles.input}
-            onChangeText={value => this.setState({firstName: value})}
-          />
-          <TextInput
-            value={lastName}
-            placeholder="Enter Last Name"
-            style={styles.input}
-            onChangeText={value => this.setState({lastName: value})}
-          />
-          <TextInput
-            value={email}
-            placeholder="enter Email"
-            style={styles.input}
-            onChangeText={value => this.setState({email: value})}
-          />
-          <TextInput
-            value={password}
-            placeholder="enter password"
-            secureTextEntry
-            style={styles.input}
-            onChangeText={value => this.setState({password: value})}
-          />
-          <View style={[styles.button]}>
-            <Button
-              title="Register"
-              onPress={() => this.props.initRegistration(this.state)}
-              color="darkslategrey"
+          style={styles.image}>
+          <View style={[styles.main]}>
+            <Text style={[styles.text]}>
+              Fill the following details to register
+            </Text>
+            <TextInput
+              value={firstName}
+              placeholder="Enter First Name"
+              style={styles.input}
+              onChangeText={value => this.setState({firstName: value})}
             />
+            <TextInput
+              value={lastName}
+              placeholder="Enter Last Name"
+              style={styles.input}
+              onChangeText={value => this.setState({lastName: value})}
+            />
+            <TextInput
+              value={email}
+              placeholder="enter Email"
+              style={styles.input}
+              onChangeText={value => this.setState({email: value})}
+            />
+            <TextInput
+              value={password}
+              placeholder="enter password"
+              secureTextEntry
+              style={styles.input}
+              onChangeText={value => this.setState({password: value})}
+            />
+            <View style={[styles.button]}>
+              <Button
+                title="Register"
+                onPress={() => this.props.initRegistration(this.state)}
+                color="darkslategrey"
+              />
+            </View>
           </View>
-        </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -102,13 +116,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  image: {
+    flex: 1,
+    width: '100%',
+    // borderWidth: 1,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
   main: {
     width: 400,
     justifyContent: 'center',
     padding: 30,
     alignSelf: 'center',
-    backfaceVisibility: 'visible',
-    position: 'absolute',
   },
   input: {
     backgroundColor: 'lightgrey',
@@ -128,9 +147,5 @@ const styles = StyleSheet.create({
   button: {
     marginVertical: 15,
     borderWidth: 2,
-  },
-  image: {
-    flex: 1,
-    width: '100%',
   },
 });

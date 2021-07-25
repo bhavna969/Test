@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
 
 import {connect} from 'react-redux';
 
@@ -7,27 +7,26 @@ class account extends Component {
   render() {
     return (
       <View style={[styles.main]}>
-        <Image
+        <ImageBackground
           source={require('../assets/images/background.png')}
-          style={styles.image}
-        />
-
-        <View style={[styles.container]}>
-          <Image
-            source={require('../assets/images/user.png')}
-            style={styles.profilePic}
-          />
-          <Text style={[styles.text, {fontSize: 25}]}>My Account</Text>
-          <Text style={[styles.text, {backgroundColor: 'lightgrey'}]}>
-            Name: Bhavna Chaudhary
-          </Text>
-          <Text style={[styles.text, {backgroundColor: 'lightgrey'}]}>
-            Email: eve.holt@reqres.in
-          </Text>
-          <Text style={[styles.text, {backgroundColor: 'lightgrey'}]}>
-            password: cityslicka
-          </Text>
-        </View>
+          style={styles.image}>
+          <View style={[styles.container]}>
+            <Image
+              source={require('../assets/images/user.png')}
+              style={styles.profilePic}
+            />
+            <Text style={[styles.text, {fontSize: 25}]}>My Account</Text>
+            <Text style={[styles.text, {backgroundColor: 'lightgrey'}]}>
+              Name: Bhavna Chaudhary
+            </Text>
+            <Text style={[styles.text, {backgroundColor: 'lightgrey'}]}>
+              Email: eve.holt@reqres.in
+            </Text>
+            <Text style={[styles.text, {backgroundColor: 'lightgrey'}]}>
+              password: cityslicka
+            </Text>
+          </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -41,9 +40,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  image: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+  },
   container: {
-    backfaceVisibility: 'visible',
-    position: 'absolute',
     justifyContent: 'center',
     // alignItems: 'center',
     margin: 10,
@@ -61,10 +63,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'center',
     marginVertical: 10,
-  },
-  image: {
-    flex: 1,
-    width: '100%',
   },
   profilePic: {
     height: 150,

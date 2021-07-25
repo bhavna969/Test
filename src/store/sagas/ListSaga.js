@@ -4,23 +4,24 @@ import API from '../../utils/api';
 import {TOAST_TYPE} from '../../utils/constants';
 
 export default function* listsaga() {
-  yield takeLatest(types.LIST_SHOW, list);
+  yield takeLatest(types.GET_LIST_DATA_START, list);
 }
 
-function* list() {
+function* list(action) {
   yield put({
     type: types.LOADER_START,
   });
   try {
     const result = yield new API().call({
-      apiEndPoints: 'users?page=2',
-      // type: 'get',
-      // params: action.payload,
+      apiEndPoints: `users?page=${action.payload.pageNo}`,
     });
-    console.log('results =>', result);
+    // console.log('results =>', action.payload);
     yield put({
-      type: types.LIST_SHOW_SUCCESS,
-      // payload: result.data,
+      type: types.GET_LIST_DATA_SUCCESS,
+      payload: {
+        oldData: action.payload.data,
+        result: result.data,
+      },
     });
 
     yield put({
@@ -36,9 +37,10 @@ function* list() {
       type: types.LOADER_STOP,
     });
   } catch (error) {
+    console.log(error);
     yield put({
-      type: types.LIST_SHOW_FAIL,
-      // payload: error,
+      type: types.GET_LIST_DATA_ERROR,
+      payload: error,
     });
 
     yield put({
@@ -49,7 +51,7 @@ function* list() {
       type: types.TOAST_SHOW,
       payload: {
         showing: true,
-        message: 'There is an Error while Showing List!!',
+        message: 'There is an Error while Loading List!!',
         type: TOAST_TYPE.ERROR,
       },
     });

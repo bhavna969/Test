@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MainPage from '../screens/MainPage';
-import Home from './HomeNavigation';
+import Home from '../components/Navigation/HomeNavigation';
 
 import Loader from '../components/loader';
 import {setUserData} from '../store/actions/LogInAction';

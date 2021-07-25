@@ -2,28 +2,25 @@ import * as types from '../actionTypes';
 
 const INITIAL_STATE = {
   loading: false,
-  listData: null,
+  location: 'Not Set',
   error: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case types.GET_LIST_DATA_START:
+    case types.GET_LOCATION_START:
       return {
         ...state,
         ...INITIAL_STATE,
         loading: true,
       };
-    case types.GET_LIST_DATA_SUCCESS:
-      const listData = action.payload.result;
-      // console.log(action.payload.oldData);
-      listData.data = [...action.payload.oldData, ...listData.data];
+    case types.GET_LOCATION_SUCCESS:
       return {
         ...state,
         ...INITIAL_STATE,
-        listData,
+        location: action.payload.place_name,
       };
-    case types.GET_LIST_DATA_ERROR:
+    case types.GET_LOCATION_FAIL:
       return {
         ...state,
         ...INITIAL_STATE,
