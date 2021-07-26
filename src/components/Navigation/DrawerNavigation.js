@@ -7,7 +7,6 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-import {DrawerActions, drawerIcon} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Settings from '../../screens/Settings';

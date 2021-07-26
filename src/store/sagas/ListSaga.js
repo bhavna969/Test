@@ -10,6 +10,7 @@ export default function* listsaga() {
 function* list(action) {
   yield put({
     type: types.LOADER_START,
+    payload: 'fetching list..',
   });
   try {
     const result = yield new API().call({

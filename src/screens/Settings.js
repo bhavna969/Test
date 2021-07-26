@@ -10,11 +10,14 @@ import {
 
 import {initLogout} from '../store/actions/LogoutAction';
 import {connect} from 'react-redux';
+import Header from '../components/header';
 
 class Settings extends Component {
   render() {
+    const {navigation} = this.props;
     return (
       <View style={[styles.main]}>
+        <Header navigation={navigation} />
         <ImageBackground
           source={require('../assets/images/background.png')}
           style={styles.image}>

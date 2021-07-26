@@ -11,9 +11,9 @@ import {setUserData} from '../store/actions/LogInAction';
 import {setRegistrationData} from '../store/actions/RegistrationAction';
 
 class Auth extends Component {
-  state = {
-    loading: true,
-  };
+  // state = {
+  //   loading: true,
+  // };
 
   componentDidMount() {
     AsyncStorage.getItem('userData')

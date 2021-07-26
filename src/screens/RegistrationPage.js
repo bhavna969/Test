@@ -13,9 +13,9 @@ import {
   initRegistration,
   unregister,
 } from '../store/actions/RegistrationAction';
+import Loader from '../components/loader';
 
 import STYLES from '../utils/styles';
-import Home from '../components/Navigation/HomeNavigation';
 
 class Registration extends Component {
   state = {
@@ -27,9 +27,10 @@ class Registration extends Component {
     hasError: false,
   };
   render() {
-    const {email, password, isRegistered, hasError, firstName, lastName} =
-      this.state;
-    const {user} = this.props;
+    const {email, password, firstName, lastName} = this.state;
+    const {initRegistration, unregister, user, loading} = this.props;
+
+    // if (loading) return <Loader />;
     if (user) {
       return (
         <View style={[STYLES.main, styles.container]}>
@@ -40,7 +41,7 @@ class Registration extends Component {
               <Text style={[styles.text]}>User Registered!!</Text>
               <Button
                 title="Unregister"
-                onPress={() => this.props.unregister(this.state)}
+                onPress={() => unregister(this.state)}
                 color="darkslategrey"
               />
               <View style={{marginVertical: 15}} />
@@ -92,7 +93,7 @@ class Registration extends Component {
             <View style={[styles.button]}>
               <Button
                 title="Register"
-                onPress={() => this.props.initRegistration(this.state)}
+                onPress={() => initRegistration(this.state)}
                 color="darkslategrey"
               />
             </View>
@@ -105,11 +106,13 @@ class Registration extends Component {
 const mapStateToProps = state => {
   return {
     user: state.RegistrationReducer.user,
+    loading: state.RegistrationReducer.loading,
   };
 };
-export default connect(mapStateToProps, {initRegistration, unregister})(
-  Registration,
-);
+export default connect(mapStateToProps, {
+  initRegistration,
+  unregister,
+})(Registration);
 
 const styles = StyleSheet.create({
   container: {

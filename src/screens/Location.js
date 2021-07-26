@@ -5,6 +5,7 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import {connect} from 'react-redux';
 import {fetchLocation} from '../store/actions/LocationAction';
 import {ACCESS_TOKEN} from '../store/sagas/LocationSaga';
+import Header from '../components/header';
 
 MapboxGL.setAccessToken(ACCESS_TOKEN);
 
@@ -34,10 +35,11 @@ class Location extends Component {
     );
   };
   render() {
-    const {location} = this.props;
+    const {location, navigation} = this.props;
     // console.log(location);
     return (
       <View style={[styles.main]}>
+        <Header navigation={navigation} />
         <ImageBackground
           source={require('../assets/images/background.png')}
           style={styles.image}>

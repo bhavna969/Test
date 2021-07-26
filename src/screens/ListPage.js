@@ -11,6 +11,7 @@ import {
 
 import {connect} from 'react-redux';
 import {showList} from '../store/actions/ListAction';
+import Header from '../components/header';
 
 class ListPage extends Component {
   fetchData = (isPaginated = true) => {
@@ -29,10 +30,11 @@ class ListPage extends Component {
     if (pageNo <= listData.total_pages) showList({data, pageNo});
   };
   render() {
-    const {listData} = this.props;
+    const {listData, navigation} = this.props;
 
     return (
       <View style={[styles.main]}>
+        {/* <Header navigation={navigation} /> */}
         <ImageBackground
           source={require('../assets/images/background.png')}
           style={styles.image}>

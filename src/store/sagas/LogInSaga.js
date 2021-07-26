@@ -10,6 +10,7 @@ export default function* loginsaga() {
 function* login(action) {
   yield put({
     type: types.LOADER_START,
+    payload: 'Logging In...',
   });
   try {
     const result = yield new API().call({

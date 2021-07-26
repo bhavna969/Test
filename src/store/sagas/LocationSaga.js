@@ -13,6 +13,7 @@ export default function* LocationSaga() {
 function* location(action) {
   yield put({
     type: types.LOADER_START,
+    payload: 'fetching location..',
   });
   try {
     const result = yield axios.get(

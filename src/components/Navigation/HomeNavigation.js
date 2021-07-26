@@ -1,34 +1,14 @@
 import React, {Component} from 'react';
-import {
-  View,
-  SafeAreaView,
-  Text,
-  StyleSheet,
-  Pressable,
-  ImageBackground,
-  Linking,
-} from 'react-native';
-import {connect} from 'react-redux';
 
 import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
-import {DrawerActions} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
-import Settings from '../../screens/Settings';
 import ListPage from '../../screens/ListPage';
-import account from '../../screens/account';
-import Notifications from '../../screens/Notifications';
 import MyDrawer from './DrawerNavigation';
+import * as Colors from '../../utils/colors';
 
-const Tab = createMaterialTopTabNavigator();
-const Drawer = createDrawerNavigator();
+const Tab = createMaterialBottomTabNavigator();
 const Icons = MaterialCommunityIcons;
 
 class Home extends Component {
@@ -38,38 +18,36 @@ class Home extends Component {
         <Tab.Navigator
           initialRouteName="Feed"
           swipeEnabled={true}
-          // tabBarPosition={'bottom'}
-          keyboardDismissMode={'on-drag'}
-          tabBarOptions={{
-            activeTintColor: '#e91e63',
-            inactiveTintColor: 'red',
-            showIcon: true,
-            pressColor: 'navy',
-            labelStyle: {fontSize: 11, color: 'white'},
-            tabStyle: {height: 50},
-            style: {backgroundColor: 'cadetblue', borderRadius: 10},
-            pressOpacity: 10,
-            indicatorStyle: {backgroundColor: 'white'},
-          }}>
-          <Tab.Screen
-            name="Home"
-            component={MyDrawer}
-            options={{
-              tabBarLabel: 'Home',
-              tabBarIcon: () => <Icons name="home" color={'white'} size={30} />,
-              tabBarBadge: 3,
-            }}
-          />
-          <Tab.Screen
-            name="Users"
-            component={ListPage}
-            options={{
-              tabBarIcon: () => (
-                <Icons name="account-search" color={'white'} size={30} />
-              ),
-              tabBarBadge: 3,
-            }}
-          />
+          labeled={true}
+          shifting={true}
+          activeColor={Colors.white}
+          // inactiveColor={Colors.grey_dark_2}
+          barStyle={{
+            backgroundColor: Colors.blue_Green_medium_5,
+            height: 50,
+          }}
+          screenOptions={({route}) => ({
+            tabBarIcon: ({
+              // focused = true,
+              color = Colors.blue_medium_2,
+              size = 25,
+            }) => {
+              const icons = {
+                Home: 'home',
+                Users: 'account-group',
+              };
+              return (
+                <Icons
+                  name={icons[route.name]}
+                  color={color}
+                  size={size}
+                  // focused={focused}
+                />
+              );
+            },
+          })}>
+          <Tab.Screen name="Home" component={MyDrawer} />
+          <Tab.Screen name="Users" component={ListPage} />
         </Tab.Navigator>
       </NavigationContainer>
     );

@@ -1,16 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, Button, ImageBackground} from 'react-native';
+import Header from '../components/header';
 
 function Notifications({navigation}) {
   return (
     <View style={[styles.main]}>
+      <Header navigation={navigation} />
       <ImageBackground
         source={require('../assets/images/background.png')}
         style={styles.image}>
         <View style={[styles.container]}>
-          {/* <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Button onPress={() => navigation.goBack()} title="Go back home" />
-          </View> */}
           <Text style={[styles.text]}>Notifications</Text>
         </View>
       </ImageBackground>

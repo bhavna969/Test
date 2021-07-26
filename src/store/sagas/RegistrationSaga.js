@@ -10,6 +10,7 @@ export default function* registrationsaga() {
 function* registration(action) {
   yield put({
     type: types.LOADER_START,
+    payload: 'Registering User...',
   });
   try {
     const result = yield new API().call({

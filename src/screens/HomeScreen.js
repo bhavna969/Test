@@ -4,11 +4,9 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  Pressable,
   ImageBackground,
 } from 'react-native';
-
-import {DrawerActions} from '@react-navigation/native';
+import Header from '../components/header';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Icons = MaterialCommunityIcons;
@@ -16,21 +14,12 @@ const Icons = MaterialCommunityIcons;
 function HomeScreen({navigation}) {
   return (
     <SafeAreaView style={[styles.main]}>
+      <Header navigation={navigation} showBellIcon />
       <ImageBackground
         source={require('../assets/images/background.png')}
         style={styles.image}>
-        {/* <View style={styles.header}>
-          <Pressable
-            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-            <Text style={[styles.drawerTab]}>click</Text>
-          </Pressable>
-        </View> */}
         <View style={[styles.container]}>
           <View style={{width: 200}} />
-          {/* <Pressable
-            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-            <Text style={[styles.drawerTab]}>click</Text>
-          </Pressable> */}
           <Text style={[styles.text]}>Home Screen</Text>
         </View>
       </ImageBackground>
@@ -59,7 +48,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     padding: 30,
-    borderWidth: 2,
+    // borderWidth: 2,
   },
   text: {
     fontSize: 18,
@@ -68,18 +57,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'center',
     marginVertical: 20,
-  },
-  header: {
-    backgroundColor: 'cadetblue',
-    alignContent: 'flex-end',
-  },
-  drawerTab: {
-    borderWidth: 2,
-    width: 50,
-    height: 40,
-    fontSize: 20,
-    marginTop: 30,
-    alignSelf: 'flex-end',
-    textAlign: 'center',
   },
 });

@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
-
+import Header from '../components/header';
 import {connect} from 'react-redux';
 
 class account extends Component {
   render() {
     return (
       <View style={[styles.main]}>
+        <Header navigation={this.props.navigation} showBellIcon={false} />
         <ImageBackground
           source={require('../assets/images/background.png')}
           style={styles.image}>
