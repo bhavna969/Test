@@ -7,7 +7,7 @@ class account extends Component {
   render() {
     return (
       <View style={[styles.main]}>
-        <Header navigation={this.props.navigation} showBellIcon={false} />
+        <Header navigation={this.props.navigation} />
         <ImageBackground
           source={require('../assets/images/background.png')}
           style={styles.image}>

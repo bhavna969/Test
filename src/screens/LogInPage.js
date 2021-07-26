@@ -11,7 +11,6 @@ import {
 import STYLES from '../utils/styles';
 import {initLogin} from '../store/actions/LogInAction';
 import {connect} from 'react-redux';
-import Home from '../components/Navigation/HomeNavigation';
 
 class LogIn extends Component {
   state = {
@@ -23,10 +22,6 @@ class LogIn extends Component {
   render() {
     const {email, password, isLoggedIn, hasError} = this.state;
     const {user, RegisUser} = this.props;
-
-    if (user) {
-      return <Home />;
-    }
 
     return (
       <View style={[STYLES.main, styles.container]}>

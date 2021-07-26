@@ -11,10 +11,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const Icons = MaterialCommunityIcons;
 
-function HomeScreen({navigation}) {
+function Home({navigation}) {
   return (
     <SafeAreaView style={[styles.main]}>
-      <Header navigation={navigation} showBellIcon />
+      <Header navigation={navigation} />
       <ImageBackground
         source={require('../assets/images/background.png')}
         style={styles.image}>
@@ -27,7 +27,7 @@ function HomeScreen({navigation}) {
   );
 }
 
-export default HomeScreen;
+export default Home;
 
 const styles = StyleSheet.create({
   main: {

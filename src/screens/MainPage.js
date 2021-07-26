@@ -12,7 +12,6 @@ import STYLES from '../utils/styles';
 import Registration from './RegistrationPage';
 import LogIn from './LogInPage';
 
-import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {connect} from 'react-redux';
 import Animations from './Slider';
@@ -24,21 +23,19 @@ class MainPage extends Component {
     const {LogInUser, RegisUser} = this.props;
 
     return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerTintColor: 'white',
-            headerStyle: {backgroundColor: 'cadetblue'},
-            headerTitleStyle: {
-              fontWeight: '600',
-              fontSize: 20,
-            },
-          }}>
-          <Stack.Screen name="MyApp" component={HomeScreen} />
-          <Stack.Screen name="RegistrationPage" component={Registration} />
-          <Stack.Screen name="LogIn" component={LogIn} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerTintColor: 'white',
+          headerStyle: {backgroundColor: 'cadetblue'},
+          headerTitleStyle: {
+            fontWeight: '600',
+            fontSize: 20,
+          },
+        }}>
+        <Stack.Screen name="MyApp" component={HomeScreen} />
+        <Stack.Screen name="RegistrationPage" component={Registration} />
+        <Stack.Screen name="LogIn" component={LogIn} />
+      </Stack.Navigator>
     );
   }
 }
@@ -83,7 +80,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    borderWidth: 1,
+    // borderWidth: 1,
     width: '100%',
     // height: '100%',
     // borderWidth: 2,

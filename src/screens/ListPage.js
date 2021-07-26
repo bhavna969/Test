@@ -12,8 +12,12 @@ import {
 import {connect} from 'react-redux';
 import {showList} from '../store/actions/ListAction';
 import Header from '../components/header';
+import * as Colors from '../utils/colors';
 
 class ListPage extends Component {
+  componentDidMount() {
+    this.fetchData(false);
+  }
   fetchData = (isPaginated = true) => {
     const {listData, showList} = this.props;
 
@@ -31,19 +35,18 @@ class ListPage extends Component {
   };
   render() {
     const {listData, navigation} = this.props;
-
     return (
       <View style={[styles.main]}>
-        {/* <Header navigation={navigation} /> */}
+        <Header navigation={navigation} />
         <ImageBackground
           source={require('../assets/images/background.png')}
           style={styles.image}>
-          <View style={[styles.container]}>
+          {/* <View style={[styles.container]}>
             <Button
               title="Show Users List"
               onPress={() => this.fetchData(false)}
             />
-          </View>
+          </View> */}
           <FlatList
             data={(listData && listData.data) || []}
             renderItem={renderItem}
@@ -93,17 +96,10 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
   },
-  container: {
-    justifyContent: 'center',
-    // alignItems: 'center',
-    margin: 10,
-    borderWidth: 1,
-    width: '95%',
-    padding: 30,
-  },
   item: {
     margin: 10,
-    borderWidth: 1,
+    borderBottomWidth: 1,
+    // backgroundColor: Colors.blue_Green_medium_5,
     width: '95%',
     height: 100,
     padding: 30,

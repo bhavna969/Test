@@ -11,27 +11,18 @@ import * as Colors from '../utils/colors';
 import {DrawerActions} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Icons = MaterialCommunityIcons;
+const Icon = MaterialCommunityIcons;
 
 class Header extends Component {
   render() {
-    const {navigation, showBellIcon} = this.props;
+    const {navigation} = this.props;
     return (
       <SafeAreaView style={[styles.main]}>
         <TouchableOpacity
           style={[styles.icon]}
           onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-          <Icons name="view-headline" color={Colors.white} size={30} />
+          <Icon name="view-headline" color={Colors.white} size={30} />
         </TouchableOpacity>
-        {showBellIcon ? (
-          <TouchableOpacity
-            style={[styles.icon]}
-            onPress={() => this.props.navihation.navigate('Notifications')}>
-            <Icons name="bell" color={Colors.white} size={25} />
-          </TouchableOpacity>
-        ) : (
-          <View />
-        )}
       </SafeAreaView>
     );
   }
