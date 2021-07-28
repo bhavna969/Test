@@ -30,7 +30,6 @@ class ToDo extends Component {
       .then(Data => {
         this.setState({loading: false});
         if (Data) {
-          // data = JSON.parse(Data);
           this.props.setTask(JSON.parse(Data));
         }
       })
@@ -38,12 +37,8 @@ class ToDo extends Component {
         this.setState({loading: false});
       });
   }
-  changeStateOne = () => {
-    this.setState({added: !this.state.added});
-  };
-  changeStateTwo = () => {
-    this.setState({deleted: !this.state.deleted});
-  };
+  changeStateOne = () => this.setState({added: !this.state.added});
+  changeStateTwo = () => this.setState({deleted: !this.state.deleted});
 
   deleteTask = item => {
     const index = data.indexOf(item.item);
