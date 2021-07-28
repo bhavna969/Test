@@ -7,6 +7,7 @@ import {
   FlatList,
   Button,
   ImageBackground,
+  RefreshControl,
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -54,8 +55,12 @@ class ListPage extends Component {
             onEndReached={({distanceFromEnd}) => {
               if (distanceFromEnd >= 0) this.fetchData();
             }}
-            refreshing={false}
-            onRefresh={() => this.fetchData(false)}
+            refreshControl={
+              <RefreshControl
+                refreshing={false}
+                onRefresh={() => this.fetchData(false)}
+              />
+            }
           />
         </ImageBackground>
       </View>

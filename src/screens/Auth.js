@@ -25,6 +25,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as Colors from '../utils/colors';
+import ToDoList from './ToDoList';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -148,6 +149,15 @@ function MyDrawer({navigation}) {
         component={Settings}
         options={{
           drawerIcon: () => <Icon name="cogs" size={22} color="cadetblue" />,
+        }}
+      />
+      <Drawer.Screen
+        name="ToDoList"
+        component={ToDoList}
+        options={{
+          drawerIcon: () => (
+            <Icon name="clipboard-outline" size={22} color="cadetblue" />
+          ),
         }}
       />
     </Drawer.Navigator>
