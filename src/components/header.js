@@ -6,9 +6,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-import {connect} from 'react-redux';
-import {addTask} from '../store/actions/ToDoListAction';
-
 import * as Colors from '../utils/colors';
 import {DrawerActions} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,13 +14,7 @@ const Icon = MaterialCommunityIcons;
 
 class Header extends Component {
   render() {
-    const {
-      title = '',
-      navigation,
-      backButton = false,
-      task,
-      tasks,
-    } = this.props;
+    const {title = '', navigation, backButton = false} = this.props;
     // console.log('header', task);
     return (
       <SafeAreaView style={[styles.main]}>
@@ -48,15 +39,7 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    tasks: state.ToDoListReducer.tasks,
-    task: state.ToDoListReducer.task,
-    isUpdating: state.ToDoListReducer.isUpdating,
-  };
-};
-
-export default connect(mapStateToProps, {addTask})(Header);
+export default Header;
 
 const styles = StyleSheet.create({
   main: {

@@ -35,7 +35,6 @@ class ToDoList extends Component {
           options={{
             header: ({navigation}) => {
               console.log(isUpdating);
-              // const fun = () =>
               return (
                 <Header
                   navigation={navigation}
@@ -47,8 +46,6 @@ class ToDoList extends Component {
                         time: task.time,
                         task: task.task,
                       });
-                    } else {
-                      return alert('hi');
                     }
                   }}
                 />

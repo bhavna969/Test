@@ -29,13 +29,13 @@ export default (state = INITIAL_STATE, action) => {
     case types.SET_TASK:
       return {
         ...state,
-        ...INITIAL_STATE,
+        error: null,
         tasks: action.payload,
       };
     case types.PUT_TASK:
       return {
         ...state,
-        ...INITIAL_STATE,
+        error: null,
         task: action.payload.task,
         tasks: action.payload.data,
         isUpdating: action.payload.isUpdating,

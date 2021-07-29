@@ -46,12 +46,17 @@ class AddTask extends Component {
       msg = 'successfully added task';
       let TIME = timeShow;
       if (timeShow === 'Time Not Set (all day)') TIME = '';
+      let DATE = dateShow;
+      if (dateShow === 'Date Not Set') DATE = '';
       this.props.addTask({
         data,
         task,
         time: TIME,
-        date: dateShow,
+        date: DATE,
       });
+      if (this.props.isUpdating) {
+        msg = 'successfult updated task';
+      }
     } else {
       msg = 'task cannot be empty';
     }
@@ -173,6 +178,7 @@ const mapStateToProps = state => {
   return {
     tasks: state.ToDoListReducer.tasks,
     task: state.ToDoListReducer.task,
+    isUpdating: state.ToDoListReducer.isUpdating,
   };
 };
 
