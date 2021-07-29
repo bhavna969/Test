@@ -10,14 +10,14 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import * as Colors from '../utils/colors';
 import {addTask} from '../store/actions/ToDoListAction';
+import {responsiveHeight, responsiveWidth} from '../utils/responsive';
+import Header from '../components/header';
 
 const Icon = MaterialCommunityIcons;
-
 let data = [];
 
 class AddTask extends Component {
@@ -30,17 +30,27 @@ class AddTask extends Component {
     dateShow: 'Date Not Set',
     timeShow: 'Time Not Set (all day)',
   };
+  componentDidMount() {
+    if (this.props.task)
+      this.setState({
+        task: this.props.task.task,
+        dateShow: this.props.task.date,
+        timeShow: this.props.task.time,
+      });
+  }
 
   add = () => {
-    const {task, date, time} = this.state;
+    const {task, dateShow, timeShow} = this.state;
     let msg = null;
     if (this.state.task) {
       msg = 'successfully added task';
+      let TIME = timeShow;
+      if (timeShow === 'Time Not Set (all day)') TIME = '';
       this.props.addTask({
         data,
         task,
-        time: JSON.stringify(time).slice(12, 17),
-        date: JSON.stringify(date).slice(1, 11),
+        time: TIME,
+        date: dateShow,
       });
     } else {
       msg = 'task cannot be empty';
@@ -76,11 +86,16 @@ class AddTask extends Component {
 
   render() {
     data = this.props.tasks;
-    const {date, dateShow, showCalender, timeShow, showWatch, time} =
+    const {task, date, dateShow, showCalender, timeShow, showWatch, time} =
       this.state;
-    // console.log(date);
+    // console.log(this.props.navigation);
     return (
       <View style={[styles.main]}>
+        {/* <Header
+          title="New Task"
+          navigation={this.props.navigation}
+          backButton
+        /> */}
         <ImageBackground
           source={require('../assets/images/background.png')}
           style={styles.image}>
@@ -88,6 +103,7 @@ class AddTask extends Component {
           <TextInput
             style={styles.input}
             placeholder="Enter Task Here"
+            value={task}
             onChangeText={value => this.setState({task: value})}
           />
           <Text style={[styles.text]}>Due date</Text>
@@ -109,7 +125,7 @@ class AddTask extends Component {
               value={date}
               mode={'date'}
               // is24Hour={true}
-              timeZoneOffsetInMinutes={65}
+              // timeZoneOffsetInMinutes={65}
               display="default"
               onChange={this.onChangeDate}
             />
@@ -156,6 +172,7 @@ class AddTask extends Component {
 const mapStateToProps = state => {
   return {
     tasks: state.ToDoListReducer.tasks,
+    task: state.ToDoListReducer.task,
   };
 };
 
@@ -204,7 +221,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: Colors.blue_medium_1,
     position: 'absolute',
-    marginTop: 450,
-    marginLeft: 300,
+    marginTop: responsiveHeight(70),
+    marginLeft: responsiveWidth(70),
   },
 });

@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {connect} from 'react-redux';
+import {addTask} from '../store/actions/ToDoListAction';
+
 import * as Colors from '../utils/colors';
 import {DrawerActions} from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,19 +17,46 @@ const Icon = MaterialCommunityIcons;
 
 class Header extends Component {
   render() {
-    const {navigation} = this.props;
+    const {
+      title = '',
+      navigation,
+      backButton = false,
+      task,
+      tasks,
+    } = this.props;
+    // console.log('header', task);
     return (
       <SafeAreaView style={[styles.main]}>
-        <TouchableOpacity
-          style={[styles.icon]}
-          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-          <Icon name="view-headline" color={Colors.white} size={30} />
-        </TouchableOpacity>
+        <View style={styles.header}>
+          {backButton ? (
+            <TouchableOpacity
+              style={[styles.icon]}
+              onPress={() => navigation.goBack()}>
+              <Icon name="arrow-left" color={Colors.white} size={30} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[styles.icon]}
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
+              <Icon name="view-headline" color={Colors.white} size={30} />
+            </TouchableOpacity>
+          )}
+          <Text style={styles.title}>{title}</Text>
+        </View>
       </SafeAreaView>
     );
   }
 }
-export default connect(null, null)(Header);
+
+const mapStateToProps = state => {
+  return {
+    tasks: state.ToDoListReducer.tasks,
+    task: state.ToDoListReducer.task,
+    isUpdating: state.ToDoListReducer.isUpdating,
+  };
+};
+
+export default connect(mapStateToProps, {addTask})(Header);
 
 const styles = StyleSheet.create({
   main: {
@@ -43,5 +72,16 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     marginLeft: 20,
     marginRight: 20,
+  },
+  header: {
+    height: 50,
+    backgroundColor: Colors.blue_Green_medium_5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: '900',
+    color: Colors.white,
   },
 });

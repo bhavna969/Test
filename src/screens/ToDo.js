@@ -13,8 +13,10 @@ import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Header from '../components/header';
-import {setTask} from '../store/actions/ToDoListAction';
+import {setTask, putTask, addTask} from '../store/actions/ToDoListAction';
 import * as Colors from '../utils/colors';
+
+import {responsiveHeight, responsiveWidth} from '../utils/responsive';
 
 const Icon = MaterialCommunityIcons;
 let data = [];
@@ -24,6 +26,7 @@ class ToDo extends Component {
     loading: true,
     added: false,
     deleted: false,
+    updated: false,
   };
   componentDidMount() {
     AsyncStorage.getItem('Data')
@@ -39,6 +42,7 @@ class ToDo extends Component {
   }
   changeStateOne = () => this.setState({added: !this.state.added});
   changeStateTwo = () => this.setState({deleted: !this.state.deleted});
+  changeStateThree = () => this.setState({updated: !this.state.updated});
 
   deleteTask = item => {
     const index = data.indexOf(item.item);
@@ -47,8 +51,25 @@ class ToDo extends Component {
     }
     AsyncStorage.removeItem('Data');
     AsyncStorage.setItem('Data', JSON.stringify(data));
+    AsyncStorage.getItem('Data').then(Data => {
+      if (Data) {
+        // console.log(item, index, Data);
+        this.props.setTask(JSON.parse(Data));
+      }
+    });
     this.changeStateTwo();
   };
+
+  updateTask = item => {
+    this.deleteTask({item: item.item});
+    this.props.putTask({task: item.item, data: data, isUpdating: true});
+    this.props.navigation.navigate('New Task');
+    this.changeStateThree();
+  };
+
+  componentDidUpdate() {
+    data = this.props.tasks;
+  }
 
   render() {
     const {navigation, tasks} = this.props;
@@ -59,7 +80,7 @@ class ToDo extends Component {
         <Item
           item={item}
           onPressDelete={() => this.deleteTask({item})}
-          onPressUpdate={() => alert('update')}
+          onPressUpdate={() => this.updateTask({item})}
         />
       );
     };
@@ -99,7 +120,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {setTask})(ToDo);
+export default connect(mapStateToProps, {setTask, putTask, addTask})(ToDo);
 
 const Item = ({item, onPressDelete, onPressUpdate}) => {
   const {task, time, date} = item;
@@ -130,14 +151,15 @@ const styles = StyleSheet.create({
   },
   add: {
     position: 'absolute',
-    backfaceVisibility: 'visible',
-    marginTop: 550,
-    marginLeft: 320,
+    // backfaceVisibility: 'visible',
+    height: 80,
+    width: 80,
+    marginTop: responsiveHeight(80),
+    marginLeft: responsiveWidth(70),
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.white,
     borderRadius: 50,
-    padding: 10,
   },
   container: {
     padding: 10,

@@ -30,3 +30,4 @@ export const GET_LOCATION_FAIL = 'GET_LOCATION_FAIL';
 
 export const ADD_TASK = 'ADD_TASK';
 export const SET_TASK = 'SET_TASK';
+export const PUT_TASK = 'PUT_TASK';
