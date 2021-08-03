@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Linking} from 'react-native';
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -12,6 +13,7 @@ import account from './account';
 import Notifications from './Notifications';
 import Home from './HomeScreen';
 import Location from './Location';
+import ToDoList from './ToDoList';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -25,8 +27,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import * as Colors from '../utils/colors';
-import ToDoList from './ToDoList';
-import {Linking} from 'react-native';
+import {responsiveHeight, responsiveWidth} from '../utils/responsive';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -59,9 +60,7 @@ class Auth extends Component {
   }
 
   render() {
-    const {LoginUser, RegistrationUser, loading} = this.props;
-
-    // if (loading) return <Loader />;
+    const {LoginUser, RegistrationUser} = this.props;
 
     return (
       <NavigationContainer>
@@ -106,34 +105,41 @@ export default connect(mapStateToProps, {
 function MyDrawer({navigation}) {
   return (
     <Drawer.Navigator
-      // drawerType={'front'}
       drawerStyle={{
-        width: 200,
+        width: responsiveWidth(60),
+        backgroundColor: Colors.white,
       }}
       drawerContentOptions={{
-        activeTintColor: 'navy',
-        itemStyle: {margin: 10},
+        activeTintColor: Colors.Green_medium_5,
+        itemStyle: {margin: 10, padding: 5},
+        labelStyle: {fontSize: 15, color: Colors.blue_Green_medium_5},
       }}
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          drawerIcon: () => <Icon name="home" size={20} color="cadetblue" />,
+          drawerIcon: () => (
+            <Icon name="home" size={20} color={Colors.blue_Green_medium_5} />
+          ),
         }}
       />
       <Drawer.Screen
         name="My Account"
         component={account}
         options={{
-          drawerIcon: () => <Icon name="account" size={25} color="cadetblue" />,
+          drawerIcon: () => (
+            <Icon name="account" size={25} color={Colors.blue_Green_medium_5} />
+          ),
         }}
       />
       <Drawer.Screen
         name="Notifications"
         component={Notifications}
         options={{
-          drawerIcon: () => <Icon name="bell" size={20} color="cadetblue" />,
+          drawerIcon: () => (
+            <Icon name="bell" size={20} color={Colors.blue_Green_medium_5} />
+          ),
         }}
       />
       <Drawer.Screen
@@ -141,15 +147,12 @@ function MyDrawer({navigation}) {
         component={Location}
         options={{
           drawerIcon: () => (
-            <Icon name="map-marker-radius" size={22} color="cadetblue" />
+            <Icon
+              name="map-marker-radius"
+              size={22}
+              color={Colors.blue_Green_medium_5}
+            />
           ),
-        }}
-      />
-      <Drawer.Screen
-        name="Settings"
-        component={Settings}
-        options={{
-          drawerIcon: () => <Icon name="cogs" size={22} color="cadetblue" />,
         }}
       />
       <Drawer.Screen
@@ -157,7 +160,20 @@ function MyDrawer({navigation}) {
         component={ToDoList}
         options={{
           drawerIcon: () => (
-            <Icon name="clipboard-outline" size={22} color="cadetblue" />
+            <Icon
+              name="clipboard-outline"
+              size={22}
+              color={Colors.blue_Green_medium_5}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          drawerIcon: ({}) => (
+            <Icon name="cogs" size={22} color={Colors.blue_Green_medium_5} />
           ),
         }}
       />
@@ -171,7 +187,14 @@ function CustomDrawerContent(props) {
       <DrawerItemList {...props} />
       <DrawerItem
         label="Help"
-        Icon={() => <Icon name="help-circle" size={30} color="cadetblue" />}
+        labelStyle={{fontSize: 15, color: Colors.blue_Green_medium_5}}
+        icon={() => (
+          <Icon
+            name="help-circle-outline"
+            color={Colors.blue_Green_medium_5}
+            size={22}
+          />
+        )}
         onPress={() => Linking.openURL('https://mywebsite.com/help')}
       />
     </DrawerContentScrollView>
@@ -188,10 +211,9 @@ function HomeScreen({navigation}) {
       labeled={true}
       shifting={true}
       activeColor={Colors.white}
-      // inactiveColor={Colors.grey_dark_2}
       barStyle={{
         backgroundColor: Colors.blue_Green_medium_5,
-        height: 50,
+        height: responsiveHeight(8),
       }}
       screenOptions={({route}) => ({
         tabBarIcon: ({

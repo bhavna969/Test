@@ -1,20 +1,18 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Image,
-  ImageBackground,
-} from 'react-native';
+import {View, StyleSheet, ImageBackground} from 'react-native';
 
-import STYLES from '../utils/styles';
 import Registration from './RegistrationPage';
 import LogIn from './LogInPage';
+import Animations from './Slider';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {connect} from 'react-redux';
-import Animations from './Slider';
+
+import Button from '../components/button';
+
+import * as Colors from '../utils/colors';
+import STYLES from '../utils/styles';
+import {responsiveHeight} from '../utils/responsive';
 
 const Stack = createStackNavigator();
 
@@ -25,11 +23,11 @@ class MainPage extends Component {
     return (
       <Stack.Navigator
         screenOptions={{
-          headerTintColor: 'white',
-          headerStyle: {backgroundColor: 'cadetblue'},
+          headerTintColor: Colors.white,
+          headerStyle: {backgroundColor: Colors.blue_Green_medium_5},
           headerTitleStyle: {
             fontWeight: '600',
-            fontSize: 20,
+            fontSize: responsiveHeight(3),
           },
         }}>
         <Stack.Screen name="MyApp" component={HomeScreen} />
@@ -42,23 +40,18 @@ class MainPage extends Component {
 
 const HomeScreen = ({navigation}) => {
   return (
-    <View style={[STYLES.main, styles.main]}>
+    <View style={[STYLES.main]}>
       <ImageBackground
         source={require('../assets/images/wallpaper.png')}
         style={styles.image}>
         <Animations />
         <View style={[styles.button]}>
           <Button
-            title="Sign UP"
+            title="SignUp"
             onPress={() => navigation.navigate('RegistrationPage')}
-            color="teal"
           />
           <View />
-          <Button
-            title="LOGIN"
-            onPress={() => navigation.navigate('LogIn')}
-            color="teal"
-          />
+          <Button title="LogIn" onPress={() => navigation.navigate('LogIn')} />
         </View>
       </ImageBackground>
     </View>
@@ -74,24 +67,14 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(MainPage);
 
 const styles = StyleSheet.create({
-  main: {
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
   image: {
     flex: 1,
-    // borderWidth: 1,
-    width: '100%',
-    // height: '100%',
-    // borderWidth: 2,
-    justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   button: {
-    padding: 20,
-    width: 300,
-    height: 150,
-    // borderWidth: 2,
+    height: responsiveHeight(15),
     justifyContent: 'space-evenly',
+    alignItems: 'center',
+    marginBottom: responsiveHeight(5),
   },
 });

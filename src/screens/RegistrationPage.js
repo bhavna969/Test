@@ -1,21 +1,17 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  TextInput,
-  Image,
-  ImageBackground,
-} from 'react-native';
+import {View, Text, StyleSheet, TextInput, ImageBackground} from 'react-native';
 import {connect} from 'react-redux';
 import {
   initRegistration,
   unregister,
 } from '../store/actions/RegistrationAction';
+
 import Loader from '../components/loader';
+import Button from '../components/button';
 
 import STYLES from '../utils/styles';
+import * as Colors from '../utils/colors';
+import {responsiveHeight, responsiveWidth} from '../utils/responsive';
 
 class Registration extends Component {
   state = {
@@ -37,19 +33,18 @@ class Registration extends Component {
           <ImageBackground
             source={require('../assets/images/bg.png')}
             style={styles.image}>
-            <View style={[styles.main, {padding: 60, alignSelf: 'baseline'}]}>
+            <View style={[styles.main]}>
               <Text style={[styles.text]}>User Registered!!</Text>
-              <Button
-                title="Unregister"
-                onPress={() => unregister(this.state)}
-                color="darkslategrey"
-              />
-              <View style={{marginVertical: 15}} />
-              <Button
-                title="Go to login page"
-                onPress={() => this.props.navigation.navigate('LogIn')}
-                color="darkslategrey"
-              />
+              <View style={[styles.button]}>
+                <Button
+                  title="Unregister"
+                  onPress={() => unregister(this.state)}
+                />
+                <Button
+                  title="Go to login page"
+                  onPress={() => this.props.navigation.navigate('LogIn')}
+                />
+              </View>
             </View>
           </ImageBackground>
         </View>
@@ -68,33 +63,32 @@ class Registration extends Component {
             <TextInput
               value={firstName}
               placeholder="Enter First Name"
-              style={styles.input}
+              style={STYLES.input}
               onChangeText={value => this.setState({firstName: value})}
             />
             <TextInput
               value={lastName}
               placeholder="Enter Last Name"
-              style={styles.input}
+              style={STYLES.input}
               onChangeText={value => this.setState({lastName: value})}
             />
             <TextInput
               value={email}
               placeholder="enter Email"
-              style={styles.input}
+              style={STYLES.input}
               onChangeText={value => this.setState({email: value})}
             />
             <TextInput
               value={password}
               placeholder="enter password"
               secureTextEntry
-              style={styles.input}
+              style={STYLES.input}
               onChangeText={value => this.setState({password: value})}
             />
-            <View style={[styles.button]}>
+            <View style={[styles.button, {height: responsiveHeight(8)}]}>
               <Button
                 title="Register"
                 onPress={() => initRegistration(this.state)}
-                color="darkslategrey"
               />
             </View>
           </View>
@@ -115,40 +109,28 @@ export default connect(mapStateToProps, {
 })(Registration);
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   image: {
     flex: 1,
-    width: '100%',
-    // borderWidth: 1,
     justifyContent: 'center',
     alignSelf: 'center',
   },
   main: {
-    width: 400,
+    // borderWidth: 1,
+    width: responsiveWidth(100),
+    padding: responsiveWidth(8),
     justifyContent: 'center',
-    padding: 30,
     alignSelf: 'center',
   },
-  input: {
-    backgroundColor: 'lightgrey',
-    marginVertical: 5,
-    fontSize: 18,
-  },
   text: {
-    fontSize: 20,
-    width: 350,
-    height: 40,
+    fontSize: responsiveHeight(3),
+    height: responsiveHeight(8),
     textAlign: 'center',
     alignSelf: 'center',
     alignContent: 'center',
-    marginBottom: 10,
-    color: 'maroon',
+    color: Colors.Brown_dark_5,
   },
   button: {
-    marginVertical: 15,
-    borderWidth: 2,
+    height: responsiveHeight(15),
+    alignItems: 'center',
   },
 });

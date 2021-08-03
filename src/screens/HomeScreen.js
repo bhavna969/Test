@@ -14,7 +14,7 @@ const Icons = MaterialCommunityIcons;
 function Home({navigation}) {
   return (
     <SafeAreaView style={[styles.main]}>
-      <Header navigation={navigation} />
+      <Header navigation={navigation} title="Home" />
       <ImageBackground
         source={require('../assets/images/background.png')}
         style={styles.image}>

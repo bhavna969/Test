@@ -1,28 +1,24 @@
 import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Image,
-  ImageBackground,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, ImageBackground} from 'react-native';
 
 import {initLogout} from '../store/actions/LogoutAction';
 import {connect} from 'react-redux';
+
 import Header from '../components/header';
+import Button from '../components/button';
+import {responsiveHeight, responsiveWidth} from '../utils/responsive';
 
 class Settings extends Component {
   render() {
     const {navigation} = this.props;
     return (
       <View style={[styles.main]}>
-        <Header navigation={navigation} />
+        <Header navigation={navigation} backButton={true} />
         <ImageBackground
           source={require('../assets/images/background.png')}
           style={styles.image}>
-          <View style={[styles.container]}>
-            <Text style={[styles.text]}>Settings</Text>
+          <Text style={[styles.text]}>Settings</Text>
+          <View style={[styles.button]}>
             <Button
               title="LOGOUT"
               onPress={() => this.props.initLogout()}
@@ -40,24 +36,20 @@ export default connect(null, {initLogout})(Settings);
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    justifyContent: 'center',
   },
   image: {
     flex: 1,
-    width: '100%',
     justifyContent: 'center',
-  },
-  container: {
-    justifyContent: 'center',
-    margin: 10,
-    width: '95%',
-    padding: 30,
+    alignItems: 'center',
   },
   text: {
-    fontSize: 18,
-    height: 50,
+    fontSize: responsiveWidth(6),
+    height: responsiveHeight(8),
     textAlign: 'center',
     alignSelf: 'center',
-    marginVertical: 20,
+  },
+  button: {
+    alignItems: 'center',
+    height: responsiveHeight(7.5),
   },
 });

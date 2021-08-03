@@ -7,7 +7,7 @@ class account extends Component {
   render() {
     return (
       <View style={[styles.main]}>
-        <Header navigation={this.props.navigation} />
+        <Header navigation={this.props.navigation} backButton={true} />
         <ImageBackground
           source={require('../assets/images/background.png')}
           style={styles.image}>

@@ -39,7 +39,7 @@ class Location extends Component {
     // console.log(location);
     return (
       <View style={[styles.main]}>
-        <Header navigation={navigation} />
+        <Header navigation={navigation} backButton={true} />
         <ImageBackground
           source={require('../assets/images/background.png')}
           style={styles.image}>

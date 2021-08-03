@@ -2,15 +2,19 @@ import React, {Component} from 'react';
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   TextInput,
   Image,
   ImageBackground,
 } from 'react-native';
-import STYLES from '../utils/styles';
 import {initLogin} from '../store/actions/LogInAction';
 import {connect} from 'react-redux';
+
+import Button from '../components/button';
+
+import * as Colors from '../utils/colors';
+import STYLES from '../utils/styles';
+import {responsiveHeight, responsiveWidth} from '../utils/responsive';
 
 class LogIn extends Component {
   state = {
@@ -20,11 +24,11 @@ class LogIn extends Component {
     hasError: false,
   };
   render() {
-    const {email, password, isLoggedIn, hasError} = this.state;
+    const {email, password} = this.state;
     const {user, RegisUser} = this.props;
 
     return (
-      <View style={[STYLES.main, styles.container]}>
+      <View style={[STYLES.main]}>
         <ImageBackground
           source={require('../assets/images/bgImage1.png')}
           style={styles.image}>
@@ -47,14 +51,14 @@ class LogIn extends Component {
             <TextInput
               value={email}
               placeholder="enter Email"
-              style={styles.input}
+              style={STYLES.input}
               onChangeText={value => this.setState({email: value})}
             />
             <TextInput
               value={password}
               placeholder="enter password"
               secureTextEntry
-              style={styles.input}
+              style={STYLES.input}
               onChangeText={value => this.setState({password: value})}
             />
             <View style={[styles.button]}>
@@ -62,7 +66,6 @@ class LogIn extends Component {
                 <Button
                   title="LogIn"
                   onPress={() => this.props.initLogin(this.state)}
-                  color="darkslategrey"
                 />
               ) : (
                 <Button
@@ -70,7 +73,6 @@ class LogIn extends Component {
                   onPress={() =>
                     this.props.navigation.navigate('RegistrationPage')
                   }
-                  color="darkslategrey"
                 />
               )}
             </View>
@@ -91,46 +93,33 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {initLogin})(LogIn);
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
   image: {
     flex: 1,
-    width: '100%',
     justifyContent: 'center',
   },
   main: {
-    // backfaceVisibility: 'visible',
     justifyContent: 'center',
-    padding: 40,
-    margin: 10,
-    // position: 'absolute',
-  },
-  input: {
-    backgroundColor: 'lightgrey',
-    marginVertical: 5,
-    fontSize: 18,
+    paddingLeft: responsiveWidth(10),
+    paddingRight: responsiveWidth(10),
+    flex: 1,
   },
   text: {
-    fontSize: 30,
-    width: 350,
-    height: 40,
+    fontSize: responsiveWidth(7),
+    width: responsiveWidth(90),
+    height: responsiveHeight(6),
     textAlign: 'center',
     alignSelf: 'center',
-    alignContent: 'center',
-    marginBottom: 10,
-    color: 'maroon',
+    color: Colors.Brown_dark_5,
   },
   button: {
-    marginVertical: 15,
-    borderWidth: 2,
-    borderRadius: 10,
+    height: responsiveHeight(8),
+    alignItems: 'center',
   },
   profilePic: {
-    height: 150,
-    width: 150,
-    marginVertical: 20,
-    borderRadius: 100,
+    height: responsiveWidth(30),
+    width: responsiveWidth(30),
+    marginVertical: responsiveHeight(5),
+    borderRadius: responsiveWidth(100),
     alignContent: 'center',
     alignSelf: 'center',
   },
